@@ -4,6 +4,45 @@ void main() {
   runApp(const MainApp());
 }
 
+enum HitType {
+  hit,
+  partial,
+  miss,
+}
+
+class Letter {
+  final String char;
+  final HitType type;
+
+  Letter(this.char, this.type);
+}
+
+class Game {
+  final String _word = "APPLE";
+
+  List<List<Letter>> guesses = [];
+
+  void guess(String input) {
+    input = input.toUpperCase();
+
+    if (input.length != 5) return;
+
+    List<Letter> result = [];
+
+    for (int i = 0; i < input.length; i++) {
+      if (input[i] == _word[i]) {
+        result.add(Letter(input[i], HitType.hit));
+      } else if (_word.contains(input[i])) {
+        result.add(Letter(input[i], HitType.partial));
+      } else {
+        result.add(Letter(input[i], HitType.miss));
+      }
+    }
+
+    guesses.add(result);
+  }
+}
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -12,22 +51,13 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Align(
+          title: const Align(
             alignment: Alignment.centerLeft,
             child: Text('Birdle'),
           ),
         ),
         body: Center(
           child: GamePage(),
-          /*child: Row( mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-            Tile('A', HitType.hit),
-            SizedBox(width: 10),
-            Tile('A', HitType.miss),
-            SizedBox(width: 10),
-            Tile('A', HitType.partial),
-            ],
-          ),*/
         ),
       ),
     );
@@ -43,8 +73,8 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.bounceIn, // NEW
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.bounceIn,
       height: 60,
       width: 60,
       decoration: BoxDecoration(
@@ -53,7 +83,6 @@ class Tile extends StatelessWidget {
           HitType.hit => Colors.green,
           HitType.partial => Colors.yellow,
           HitType.miss => Colors.grey,
-          _ => Colors.white,
         },
       ),
       child: Center(
@@ -65,7 +94,6 @@ class Tile extends StatelessWidget {
     );
   }
 }
-
 
 class GamePage extends StatefulWidget {
   GamePage({super.key});
@@ -95,7 +123,7 @@ class _GamePageState extends State<GamePage> {
               ],
             ),
           GuessInput(
-           onSubmitGuess: (String guess) {
+            onSubmitGuess: (String guess) {
               setState(() {
                 _game.guess(guess);
               });
@@ -107,15 +135,12 @@ class _GamePageState extends State<GamePage> {
   }
 }
 
-
-
 class GuessInput extends StatelessWidget {
   GuessInput({super.key, required this.onSubmitGuess});
 
   final void Function(String) onSubmitGuess;
 
   final TextEditingController _textEditingController = TextEditingController();
-
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -132,7 +157,6 @@ class GuessInput extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(35)),
                 ),
               ),
-              
               controller: _textEditingController,
               autofocus: true,
               focusNode: _focusNode,
@@ -146,7 +170,7 @@ class GuessInput extends StatelessWidget {
         ),
         IconButton(
           padding: EdgeInsets.zero,
-          icon: Icon(Icons.arrow_circle_up),
+          icon: const Icon(Icons.arrow_circle_up),
           onPressed: () {
             onSubmitGuess(_textEditingController.text.trim());
             _textEditingController.clear();
