@@ -42,16 +42,18 @@ class Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 60,
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 500),
+      curve: Curves.bounceIn, // NEW
       height: 60,
+      width: 60,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 2),
+        border: Border.all(color: Colors.grey.shade300),
         color: switch (hitType) {
           HitType.hit => Colors.green,
           HitType.partial => Colors.yellow,
           HitType.miss => Colors.grey,
-          _=> Colors.white,
+          _ => Colors.white,
         },
       ),
       child: Center(
@@ -63,6 +65,7 @@ class Tile extends StatelessWidget {
     );
   }
 }
+
 
 class GamePage extends StatefulWidget {
   GamePage({super.key});
