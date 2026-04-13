@@ -9,10 +9,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Align(
+            alignment: Alignment.centerLeft,
+            child: Text('Birdle'),
+          ),
+        ),
         body: Center(
-          child: Row( mainAxisAlignment: MainAxisAlignment.center,
+          child: GamePage(),
+          /*child: Row( mainAxisAlignment: MainAxisAlignment.center,
             children: const [
             Tile('A', HitType.hit),
             SizedBox(width: 10),
@@ -20,7 +27,7 @@ class MainApp extends StatelessWidget {
             SizedBox(width: 10),
             Tile('A', HitType.partial),
             ],
-          ),
+          ),*/
         ),
       ),
     );
@@ -52,6 +59,31 @@ class Tile extends StatelessWidget {
           letter.toUpperCase(),
           style: Theme.of(context).textTheme.titleLarge,
         ),
+      ),
+    );
+  }
+}
+
+class GamePage extends StatelessWidget {
+  GamePage({super.key});
+  final Game _game = Game();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        spacing: 5.0,
+        children: [
+          for (var guess in _game.guesess)
+            Row(
+              spacing: 5.0,
+              children: [
+                for (var letter in guess) 
+                  Tile(letter.char, letter.type),
+              ],
+            ),
+        ],
       ),
     );
   }
