@@ -12,7 +12,45 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('Olá meu povo!'),
+          child: Row( mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+            Tile('A', HitType.hit),
+            SizedBox(width: 10),
+            Tile('A', HitType.miss),
+            SizedBox(width: 10),
+            Tile('A', HitType.partial),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Tile extends StatelessWidget {
+  const Tile(this.letter, this.hitType, {super.key});
+
+  final String letter;
+  final HitType hitType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 2),
+        color: switch (hitType) {
+          HitType.hit => Colors.green,
+          HitType.partial => Colors.yellow,
+          HitType.miss => Colors.grey,
+          _=> Colors.white,
+        },
+      ),
+      child: Center(
+        child: Text(
+          letter.toUpperCase(),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );
