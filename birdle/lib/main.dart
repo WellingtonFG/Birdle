@@ -66,6 +66,7 @@ class Tile extends StatelessWidget {
 
 class GamePage extends StatelessWidget {
   GamePage({super.key});
+  
   final Game _game = Game();
 
   @override
