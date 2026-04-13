@@ -1,3 +1,8 @@
 # birdle
 
-A new Flutter project.
+Projeto de Birdle
+
+5ºP TADS
+
+ALUNO: 
+Wellington Fellipe Gomes
