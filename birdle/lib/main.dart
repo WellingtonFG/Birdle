@@ -18,7 +18,7 @@ class Letter {
 }
 
 class Game {
-  final String _word = "APPLE";
+  final String _word = "CABRA";
 
   List<List<Letter>> guesses = [];
 
