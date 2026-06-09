@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'models/task.dart';
 import 'repositories/task_repository.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
     if (task == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Atividade não Encontrada"),
+          content: Text("ATIVIDADE NÃO ENCONTRADA"),
         ),
       );
       return;
@@ -167,6 +168,10 @@ class _HomePageState extends State<HomePage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
                       foregroundColor: Colors.white,
+                      side: const BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                      )
                     ),
                     onPressed: addTask,
                     child: const Text("ADICIONAR"),
@@ -180,6 +185,10 @@ class _HomePageState extends State<HomePage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo,
                       foregroundColor: Colors.white,
+                      side: const BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                      )
                     ),
                     onPressed: updateTask,
                     child: const Text("ATUALIZAR"),
@@ -193,8 +202,11 @@ class _HomePageState extends State<HomePage> {
             TextField(
               controller: idController,
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               decoration: const InputDecoration(
-                labelText: "Pesquisar por ID",
+                labelText: "Pesquisar pelo ID",
                 filled: true,
                 fillColor: Color.fromARGB(255, 202, 202, 202),
                 border: OutlineInputBorder(),
@@ -207,6 +219,10 @@ class _HomePageState extends State<HomePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.indigo,
                 foregroundColor: Colors.white,
+                side: const BorderSide(
+                  color: Colors.black,
+                  width: 2,
+                )
               ),
               onPressed: searchById,
               child: const Text("PESQUISAR"),
