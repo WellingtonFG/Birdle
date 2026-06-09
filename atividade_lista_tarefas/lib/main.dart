@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> loadTasks() async {
-  print("Carregando tarefas");
+  print("Carregando Atividades");
 
   tasks = await repository.getAll();
 
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
     if (task == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Tarefa não encontrada"),
+          content: Text("Atividade não Encontrada"),
         ),
       );
       return;
@@ -117,10 +117,13 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: const Text("Resultado"),
+          title: const Text(
+            "ATIVIDADE\nENCONTRADA",
+            textAlign: TextAlign.center,
+          ),
           content: Text(
             "ID: ${task.id}\n"
-            "Tarefa: ${task.task}",
+            "Ação: ${task.task}",
           ),
         );
       },
