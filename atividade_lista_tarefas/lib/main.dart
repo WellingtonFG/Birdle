@@ -233,12 +233,22 @@ class _HomePageState extends State<HomePage> {
             const Text(
               "ATIVIDADES A REALIZAR",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
             const SizedBox(height: 10),
+
+            Text(
+              "TOTAL DE ATIVIDADES: ${tasks.length}",
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+
+            SizedBox(height:10),
 
             Expanded(
               child: ListView.builder(
