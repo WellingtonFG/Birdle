@@ -9,10 +9,8 @@ class LocationRepository {
     List<Map<String, dynamic>> maps = await db.query('location', limit: 1);
 
     if (maps.isEmpty) {
-      // Se o banco estiver vazio, salva a localização atual
       await db.insert('location', location.toMap());
     } else {
-      // Se já houver um registro, verifica se a cidade ou estado mudaram
       LocationModel current = LocationModel.fromMap(maps.first);
       
       if (current.cidade != location.cidade || current.estado != location.estado) {

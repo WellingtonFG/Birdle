@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   final _estadoController = TextEditingController();
   
   bool _isLoading = false;
-  String _message = 'Filtre por Cidade e Estado para obter a previsão.';
+  String _message = 'Filtre por Cidade e Estado para ter sua previsão.';
 
   Future<void> _pesquisar() async {
     String cidade = _cidadeController.text.trim();
@@ -40,7 +40,6 @@ class _SearchPageState extends State<SearchPage> {
     try {
       final weather = await _weatherService.getWeatherByCity(cidade, estado);
 
-      // Salva no banco de dados local a localização buscada com sucesso
       final locationModel = LocationModel(
         cidade: weather.cidade,
         estado: estado,
@@ -51,7 +50,6 @@ class _SearchPageState extends State<SearchPage> {
 
       if (!mounted) return;
       
-      // Abre a tela principal com os dados obtidos
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => HomePage(weather: weather)),
@@ -60,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _message = 'Localidade não encontrada. Verifique grafia e UF.';
+        _message = 'Localidade não encontrada. Verifique a Cidade e Estado.';
       });
     }
   }
@@ -69,8 +67,8 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buscar Localidade'),
-        backgroundColor: Colors.blueAccent,
+        title: const Text('Buscar Localização'),
+        backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
       body: Padding(
@@ -100,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
                 ? const CircularProgressIndicator()
                 : ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Colors.indigo,
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 50),
                     ),

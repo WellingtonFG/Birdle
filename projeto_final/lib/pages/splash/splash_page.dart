@@ -26,10 +26,9 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _fluxoInicializacao() async {
-    await Future.delayed(const Duration(seconds: 2)); // Tempo para exibir a splash
+    await Future.delayed(const Duration(seconds: 2)); 
 
     try {
-      // 1. Tenta obter geolocalização do GPS
       final position = await _locationService.getCurrentLocation();
       final endereco = await _locationService.getAddress(position.latitude, position.longitude);
       
@@ -40,15 +39,12 @@ class _SplashPageState extends State<SplashPage> {
         longitude: position.longitude,
       );
 
-      // 2. Salva ou atualiza no banco SQLite se mudou
       await _locationRepository.saveOrUpdateLocation(locationModel);
 
-      // 3. Busca o clima via coordenadas
       final weather = await _weatherService.getWeatherByCoordinates(position.latitude, position.longitude);
 
       _irParaHome(weather);
     } catch (e) {
-      // Fallback: Se falhar ou for negado, tenta buscar a última do banco
       final lastLocation = await _locationRepository.getLastLocation();
       if (lastLocation != null) {
         try {
@@ -57,7 +53,6 @@ class _SplashPageState extends State<SplashPage> {
           return;
         } catch (_) {}
       }
-      // Se não tiver GPS e nem histórico no banco, vai para a tela de busca manual
       _irParaBusca();
     }
   }
@@ -79,7 +74,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.indigo,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
