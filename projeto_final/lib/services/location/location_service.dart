@@ -1,0 +1,46 @@
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+
+class LocationService {
+  Future<Position> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      throw Exception("GPS desativado.");
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.denied) {
+      throw Exception("Permissão negada.");
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception("Permissão negada permanentemente.");
+    }
+
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+  }
+
+  Future<Map<String, String>> getAddress(
+      double latitude, double longitude) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+
+    Placemark place = placemarks.first;
+
+    return {
+      "cidade": place.locality ?? "",
+      "estado": place.administrativeArea ?? "",
+    };
+  }
+}
